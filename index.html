@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Urbana Toolkit Login - Eye Toggle</title>
+  <style>
+    :root {
+      --urbana-bg: #e6eef6;
+      --urbana-gray-bg: #f2f6f8;
+      --urbana-label: #5c6a76;
+      --urbana-input: #ffffff;
+      --urbana-input-border: #cdd7dd;
+      --urbana-button: #6ee7b7;
+      --urbana-button-hover: #57c6a5;
+      --urbana-text: #203047;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    body {
+      margin: 0;
+      background: var(--urbana-bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: var(--urbana-text);
+    }
+    .login-box {
+      background: var(--urbana-gray-bg);
+      padding: 36px 28px;
+      border-radius: 10px;
+      width: 320px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      text-align: center;
+    }
+    .logo {
+      max-height: 50px;
+      margin-bottom: 20px;
+    }
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin: 0 0 24px;
+    }
+    .field {
+      margin-bottom: 18px;
+      position: relative;
+      text-align: left;
+    }
+    label {
+      display: block;
+      font-size: 13px;
+      letter-spacing: 0.5px;
+      color: var(--urbana-label);
+      margin-bottom: 6px;
+      text-transform: uppercase;
+    }
+    input {
+      width: 100%;
+      padding: 12px 40px 12px 12px;
+      border-radius: 6px;
+      border: 1px solid var(--urbana-input-border);
+      background: var(--urbana-input);
+      font-size: 15px;
+      color: var(--urbana-text);
+      box-sizing: border-box;
+      outline-offset: 2px;
+      outline-color: transparent;
+      transition: outline-color 0.2s ease;
+    }
+    input:focus {
+      outline-color: var(--urbana-button);
+      border-color: var(--urbana-button);
+    }
+    .toggle-eye {
+      position: absolute;
+      top: 50%;
+      right: 12px;
+      transform: translateY(-50%);
+      cursor: pointer;
+      width: 22px;
+      height: 22px;
+      fill: var(--urbana-label);
+      transition: fill 0.2s ease;
+    }
+    .toggle-eye:hover {
+      fill: var(--urbana-button);
+    }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 6px;
+      background: var(--urbana-button);
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      margin-top: 4px;
+    }
+    .btn:hover {
+      background: var(--urbana-button-hover);
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <img
+      src="https://static.cdnlogo.com/logos/u/5/urbana-smart-solutions.svg"
+      alt="Urbana Logo"
+      class="logo"
+    />
+    <h2>Login</h2>
+    <form id="loginForm">
+      <div class="field">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="you@example.com"
+          required
+        />
+      </div>
+      <div class="field">
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="•••••••••"
+          required
+        />
+        <svg
+          id="toggleEye"
+          class="toggle-eye"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+          role="img"
+        >
+          <path
+            id="eyeOpen"
+            d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-3.1 0-5.5-2.4-5.5-5.5S8.9 6 12 6s5.5 2.4 5.5 5.5-2.4 5.5-5.5 5.5zm0-9a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"
+            fill="var(--urbana-label)"
+          />
+          <path
+            id="eyeClosed"
+            d="M2 2l20 20M4.95 4.95a11 11 0 0114.1 14.1"
+            stroke="var(--urbana-label)"
+            stroke-width="2"
+            stroke-linecap="round"
+            style="display:none"
+          />
+        </svg>
+      </div>
+      <button class="btn" type="submit">Login</button>
+    </form>
+  </div>
+
+  <script>
+    const toggleEye = document.getElementById("toggleEye");
+    const passwordField = document.getElementById("password");
+    const eyeOpen = document.getElementById("eyeOpen");
+    const eyeClosed = toggleEye.querySelector("path[stroke]");
+
+    toggleEye.addEventListener("click", () => {
+      const isHidden = passwordField.type === "password";
+      passwordField.type = isHidden ? "text" : "password";
+      if (isHidden) {
+        eyeOpen.style.display = "none";
+        eyeClosed.style.display = "inline";
+        toggleEye.style.fill = "var(--urbana-button)";
+        toggleEye.style.cursor = "pointer";
+      } else {
+        eyeOpen.style.display = "inline";
+        eyeClosed.style.display = "none";
+        toggleEye.style.fill = "var(--urbana-label)";
+      }
+    });
+  </script>
+</body>
+</html>
