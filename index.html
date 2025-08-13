@@ -1,370 +1,253 @@
 <!doctype html>
-<html lang="en" >
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Urbana Toolkit - Login</title>
-  <style>
-    :root {
-      --urbana-bg: #e6eef6;
-      --urbana-gray-bg: #f2f6f8;
-      --urbana-label: #5c6a76;
-      --urbana-input: #ffffff;
-      --urbana-input-border: #cdd7dd;
-      --urbana-button: #6ee7b7;
-      --urbana-button-hover: #57c6a5;
-      --urbana-text: #203047;
-      --white-color: #ffffff;
-      --nathan-africa: #000000;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-    body {
-      margin: 0;
-      background: var(--urbana-bg);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      color: var(--urbana-text);
-    }
-    .login-box {
-      position: relative;
-      background: var(--urbana-gray-bg);
-      padding: 36px 28px 28px;
-      border-radius: 10px;
-      width: 340px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-      text-align: center;
-    }
-    .logo {
-      max-height: 50px;
-      margin-bottom: 20px;
-    }
-    h2 {
-      font-size: 22px;
-      font-weight: 600;
-      margin: 0 0 24px;
-    }
-    .field {
-      margin-bottom: 18px;
-      position: relative;
-      text-align: left;
-    }
-    label {
-      display: block;
-      font-size: 13px;
-      letter-spacing: 0.5px;
-      color: var(--urbana-label);
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-    input {
-      width: 100%;
-      padding: 12px 40px 12px 12px;
-      border-radius: 6px;
-      border: 1px solid var(--urbana-input-border);
-      background: var(--urbana-input);
-      font-size: 15px;
-      color: var(--urbana-text);
-      box-sizing: border-box;
-      outline-offset: 2px;
-      outline-color: transparent;
-      transition: outline-color 0.2s ease;
-    }
-    input:focus {
-      outline-color: var(--urbana-button);
-      border-color: var(--urbana-button);
-    }
-    .toggle-eye {
-      position: absolute;
-      top: 50%;
-      right: 12px;
-      transform: translateY(-50%);
-      cursor: pointer;
-      width: 22px;
-      height: 22px;
-      fill: var(--urbana-label);
-      transition: fill 0.2s ease;
-    }
-    .toggle-eye:hover {
-      fill: var(--urbana-button);
-    }
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      background: var(--urbana-button);
-      color: #ffffff;
-      font-size: 16px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s ease;
-      margin-top: 4px;
-    }
-    .btn:hover {
-      background: var(--urbana-button-hover);
-    }
-    /* Settings gear button */
-    .settings-btn {
-      position: absolute;
-      top: 14px;
-      right: 14px;
-      width: 28px;
-      height: 28px;
-      background: transparent;
-      border: none;
-      cursor: pointer;
-      fill: var(--urbana-label);
-      transition: fill 0.2s ease;
-    }
-    .settings-btn:hover {
-      fill: var(--urbana-button);
-    }
-    /* Language dropdown */
-    .lang-dropdown {
-      position: absolute;
-      top: 48px;
-      right: 14px;
-      background: var(--urbana-input);
-      border: 1px solid var(--urbana-input-border);
-      border-radius: 6px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      display: none;
-      z-index: 10;
-      width: 180px;
-      font-size: 14px;
-      color: var(--urbana-text);
-      max-height: 260px;
-      overflow-y: auto;
-    }
-    .lang-dropdown.active {
-      display: block;
-    }
-    .lang-dropdown button {
-      width: 100%;
-      padding: 8px 12px;
-      background: transparent;
-      border: none;
-      text-align: left;
-      cursor: pointer;
-      border-radius: 0;
-      color: var(--urbana-text);
-      transition: background 0.15s ease;
-      white-space: nowrap;
-    }
-    .lang-dropdown button:hover {
-      background: var(--urbana-bg);
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Urbana Login / Signup</title>
+<style>
+:root {
+  --urbana-bg: #e6eef6;
+  --urbana-gray-bg: #f2f6f8;
+  --urbana-label: #5c6a76;
+  --urbana-input: #ffffff;
+  --urbana-input-border: #cdd7dd;
+  --urbana-button: #6ee7b7;
+  --urbana-button-hover: #57c6a5;
+  --urbana-text: #203047;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+body {
+  margin: 0;
+  background: var(--urbana-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: var(--urbana-text);
+}
+.login-box {
+  position: relative;
+  background: var(--urbana-gray-bg);
+  padding: 36px 28px 28px;
+  border-radius: 10px;
+  width: 360px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  text-align: center;
+}
+.logo {
+  max-height: 50px;
+  margin-bottom: 20px;
+}
+.tabs {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.tabs button {
+  background: none;
+  border: none;
+  font-size: 16px;
+  padding: 8px 16px;
+  border-bottom: 2px solid transparent;
+  transition: border 0.2s ease;
+}
+.tabs button.active {
+  border-bottom: 2px solid var(--urbana-button);
+  font-weight: 600;
+}
+.field {
+  margin-bottom: 18px;
+  text-align: left;
+}
+label {
+  display: block;
+  font-size: 13px;
+  color: var(--urbana-label);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--urbana-input-border);
+  background: var(--urbana-input);
+  font-size: 15px;
+  color: var(--urbana-text);
+  box-sizing: border-box;
+}
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: var(--urbana-button);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  margin-top: 4px;
+}
+.btn:hover {
+  background: var(--urbana-button-hover);
+}
+.settings-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 28px;
+  height: 28px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  fill: var(--urbana-label);
+}
+.settings-btn:hover { fill: var(--urbana-button); }
+.lang-dropdown {
+  position: absolute;
+  top: 48px;
+  right: 14px;
+  background: var(--urbana-input);
+  border: 1px solid var(--urbana-input-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  display: none;
+  z-index: 10;
+  width: 180px;
+  font-size: 14px;
+  color: var(--urbana-text);
+  max-height: 260px;
+  overflow-y: auto;
+}
+.lang-dropdown.active { display: block; }
+.lang-dropdown button {
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: var(--urbana-text);
+}
+.lang-dropdown button:hover { background: var(--urbana-bg); }
+</style>
 </head>
 <body>
-  <div class="login-box">
-    <img
-      src="https://static.cdnlogo.com/logos/u/5/urbana-smart-solutions.svg"
-      alt="Urbana Logo"
-      class="logo"
-    />
-    <button aria-label="Settings" class="settings-btn" id="settingsBtn" title="Settings">
-     <svg viewBox="0 0 24 24" width="24" height="24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" >
-        <path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z"/>
-        <path d="M19.43 12.98c.04-.32.07-.66.07-1s-.03-.68-.07-1l2.11-1.65a.5.5 0 00.11-.64l-2-3.46a.5.5 0 00-.6-.22l-2.49 1a7.04 7.04 0 00-1.7-.99l-.38-2.65A.5.5 0 0014 3h-4a.5.5 0 00-.49.42l-.38 2.65a7.04 7.04 0 00-1.7.99l-2.49-1a.5.5 0 00-.6.22l-2 3.46a.5.5 0 00.11.64L4.57 11c-.04.32-.07.66-.07 1s.03.68.07 1l-2.11 1.65a.5.5 0 00-.11.64l2 3.46a.5.5 0 00.6.22l2.49-1c.53.4 1.12.73 1.7.99l.38 2.65A.5.5 0 0010 21h4a.5.5 0 00.49-.42l.38-2.65c.58-.26 1.17-.59 1.7-.99l2.49 1a.5.5 0 00.6-.22l2-3.46a.5.5 0 00-.11-.64l-2.12-1.66z"/>
-     </svg>
-    </button>
-    <div class="lang-dropdown" id="langDropdown" role="menu" aria-label="Language selector">
-      <!-- Language buttons inserted by JS -->
-    </div>
+<div class="login-box">
+  <img src="https://static.cdnlogo.com/logos/u/5/urbana-smart-solutions.svg" alt="Urbana Logo" class="logo">
+  <button aria-label="Settings" class="settings-btn" id="settingsBtn">
+    ⚙
+  </button>
+  <div class="lang-dropdown" id="langDropdown"></div>
 
-    <h2 id="title">Login</h2>
-    <form id="loginForm">
-      <div class="field">
-        <label for="email" id="labelEmail">Email</label>
-        <input
-          id="email"
-          name="email"
-          type="email"
-          placeholder="you@example.com"
-          required
-        />
-      </div>
-      <div class="field">
-        <label for="password" id="labelPassword">Password</label>
-        <input
-          id="password"
-          name="password"
-          type="password"
-          placeholder="•••••••••"
-          required
-        />
-        <svg
-          id="toggleEye"
-          class="toggle-eye"
-          viewBox="0 0 24 24"
-          xmlns="http://www.w3.org/2000/svg"
-          aria-hidden="true"
-          role="img"
-        >
-          <path
-            id="eyeOpen"
-            d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 12c-3.1 0-5.5-2.4-5.5-5.5S8.9 6 12 6s5.5 2.4 5.5 5.5-2.4 5.5-5.5 5.5zm0-9a3.5 3.5 0 100 7 3.5 3.5 0 000-7z"
-            fill="var(--urbana-label)"
-          />
-          <path
-            id="eyeClosed"
-            d="M2 2l20 20M4.95 4.95a11 11 0 0114.1 14.1"
-            stroke="var(--urbana-label)"
-            stroke-width="2"
-            stroke-linecap="round"
-            style="display:none"
-          />
-        </svg>
-      </div>
-      <button class="btn" type="submit" id="loginBtn">Login</button>
-    </form>
+  <div class="tabs">
+    <button id="signinTab" class="active">Sign In</button>
+    <button id="signupTab">Sign Up</button>
   </div>
 
-  <script>
-    const toggleEye = document.getElementById("toggleEye");
-    const passwordField = document.getElementById("password");
-    const eyeOpen = document.getElementById("eyeOpen");
-    const eyeClosed = toggleEye.querySelector("path[stroke]");
+  <form id="signinForm">
+    <div class="field">
+      <label id="labelEmailSignin" for="emailSignin">Email</label>
+      <input type="email" id="emailSignin" placeholder="you@example.com" required>
+    </div>
+    <div class="field">
+      <label id="labelPasswordSignin" for="passwordSignin">Password</label>
+      <input type="password" id="passwordSignin" placeholder="•••••••••" required>
+    </div>
+    <button type="submit" id="loginBtn" class="btn">Sign In</button>
+  </form>
 
-    toggleEye.addEventListener("click", () => {
-      const isHidden = passwordField.type === "password";
-      passwordField.type = isHidden ? "text" : "password";
-      if (isHidden) {
-        eyeOpen.style.display = "none";
-        eyeClosed.style.display = "inline";
-        toggleEye.style.fill = "var(--urbana-button)";
-      } else {
-        eyeOpen.style.display = "inline";
-        eyeClosed.style.display = "none";
-        toggleEye.style.fill = "var(--urbana-label)";
-      }
-    });
+  <form id="signupForm" style="display:none;">
+    <div class="field">
+      <label id="labelEmailSignup" for="emailSignup">Email</label>
+      <input type="email" id="emailSignup" placeholder="you@example.com" required>
+    </div>
+    <div class="field">
+      <label id="labelPasswordSignup" for="passwordSignup">Password</label>
+      <input type="password" id="passwordSignup" placeholder="•••••••••" required>
+    </div>
+    <button type="submit" class="btn">Sign Up</button>
+  </form>
+</div>
 
-    // Language Data with translations for keys
-    const translations = {
-      en: {
-        title: "Login",
-        labelEmail: "Email",
-        labelPassword: "Password",
-        placeholderEmail: "you@example.com",
-        placeholderPassword: "•••••••••",
-        loginBtn: "Login",
-      },
-      it: {
-        title: "Accesso",
-        labelEmail: "Email",
-        labelPassword: "Password",
-        placeholderEmail: "tuo@email.com",
-        placeholderPassword: "•••••••••",
-        loginBtn: "Accedi",
-      },
-      am: {
-        title: "ግባ",
-        labelEmail: "ኢሜይል",
-        labelPassword: "የሚስጥር ቃል",
-        placeholderEmail: "እባክህ ኢሜይል ያስገቡ",
-        placeholderPassword: "•••••••••",
-        loginBtn: "ግባ",
-      },
-      es: {
-        title: "Iniciar sesión",
-        labelEmail: "Correo electrónico",
-        labelPassword: "Contraseña",
-        placeholderEmail: "tú@ejemplo.com",
-        placeholderPassword: "•••••••••",
-        loginBtn: "Entrar",
-      },
-      fr: {
-        title: "Connexion",
-        labelEmail: "Email",
-        labelPassword: "Mot de passe",
-        placeholderEmail: "vous@exemple.com",
-        placeholderPassword: "•••••••••",
-        loginBtn: "Se connecter",
-      },
-      de: {
-        title: "Anmelden",
-        labelEmail: "E-Mail",
-        labelPassword: "Passwort",
-        placeholderEmail: "du@beispiel.de",
-        placeholderPassword: "•••••••••",
-        loginBtn: "Anmelden",
-      },
-      pt: {
-        title: "Entrar",
-        labelEmail: "Email",
-        labelPassword: "Senha",
-        placeholderEmail: "você@exemplo.com",
-        placeholderPassword: "•••••••••",
-        loginBtn: "Entrar",
-      }
-    };
+<script>
+// Elements
+const signinTab = document.getElementById("signinTab");
+const signupTab = document.getElementById("signupTab");
+const signinForm = document.getElementById("signinForm");
+const signupForm = document.getElementById("signupForm");
+const settingsBtn = document.getElementById("settingsBtn");
+const langDropdown = document.getElementById("langDropdown");
 
-    const languages = [
-      { code: "en", name: "English" },
-      { code: "it", name: "Italiano" },
-      { code: "am", name: "Amharic" },
-      { code: "es", name: "Español" },
-      { code: "fr", name: "Français" },
-      { code: "de", name: "Deutsch" },
-      { code: "pt", name: "Português" }
-    ];
+// Toggle tabs
+signinTab.addEventListener("click", () => {
+  signinForm.style.display = "block";
+  signupForm.style.display = "none";
+  signinTab.classList.add("active");
+  signupTab.classList.remove("active");
+});
+signupTab.addEventListener("click", () => {
+  signupForm.style.display = "block";
+  signinForm.style.display = "none";
+  signupTab.classList.add("active");
+  signinTab.classList.remove("active");
+});
 
-    const elements = {
-      title: document.getElementById("title"),
-      labelEmail: document.getElementById("labelEmail"),
-      labelPassword: document.getElementById("labelPassword"),
-      emailInput: document.getElementById("email"),
-      passwordInput: document.getElementById("password"),
-      loginBtn: document.getElementById("loginBtn"),
-      langDropdown: document.getElementById("langDropdown"),
-      settingsBtn: document.getElementById("settingsBtn"),
-    };
+// Languages
+// Languages
+const languages = [
+  {code:"en",name:"English"},
+  {code:"it",name:"Italiano"},
+  {code:"am",name:"አማርኛ"},
+  {code:"es",name:"Español"},
+  {code:"fr",name:"Français"},
+  {code:"pt",name:"Português"},
+  {code:"nl",name:"Nederlands"}
+];
 
-    // Populate language dropdown
-    function populateLangDropdown() {
-      elements.langDropdown.innerHTML = "";
-      languages.forEach(({ code, name }) => {
-        const btn = document.createElement("button");
-        btn.type = "button";
-        btn.textContent = name;
-        btn.dataset.lang = code;
-        elements.langDropdown.appendChild(btn);
-      });
-    }
+// Translations
+const translations = {
+  en:{title:"Sign In",labelEmail:"Email",labelPassword:"Password",loginBtn:"Sign In",signupBtn:"Sign Up"},
+  it:{title:"Accedi",labelEmail:"Email",labelPassword:"Password",loginBtn:"Accedi",signupBtn:"Registrati"},
+  am:{title:"ግባ",labelEmail:"ኢሜይል",labelPassword:"የይለፍ ቃል",loginBtn:"ግባ",signupBtn:"ይመዝገቡ"},
+  es:{title:"Iniciar sesión",labelEmail:"Correo electrónico",labelPassword:"Contraseña",loginBtn:"Iniciar sesión",signupBtn:"Registrarse"},
+  fr:{title:"Se connecter",labelEmail:"Email",labelPassword:"Mot de passe",loginBtn:"Se connecter",signupBtn:"S'inscrire"},
+  pt:{title:"Entrar",labelEmail:"Email",labelPassword:"Senha",loginBtn:"Entrar",signupBtn:"Cadastrar"},
+  nl:{title:"Inloggen",labelEmail:"E-mail",labelPassword:"Wachtwoord",loginBtn:"Inloggen",signupBtn:"Registreren"}
+};
 
-    populateLangDropdown();
 
-    // Toggle dropdown
-    elements.settingsBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      elements.langDropdown.classList.toggle("active");
-    });
+// Populate language dropdown
+languages.forEach(lang=>{
+  const btn = document.createElement("button");
+  btn.textContent = lang.name;
+  btn.addEventListener("click",()=>{
+    const t = translations[lang.code];
+    // Sign In
+    document.getElementById("labelEmailSignin").textContent = t.labelEmail;
+    document.getElementById("labelPasswordSignin").textContent = t.labelPassword;
+    document.getElementById("loginBtn").textContent = t.loginBtn;
+    // Sign Up
+    document.getElementById("labelEmailSignup").textContent = t.labelEmail;
+    document.getElementById("labelPasswordSignup").textContent = t.labelPassword;
+    document.querySelector("#signupForm button").textContent = t.signupBtn;
+    // Close dropdown
+    langDropdown.classList.remove("active");
+  });
+  langDropdown.appendChild(btn);
+});
 
-    // Close dropdown on outside click
-    document.addEventListener("click", () => {
-      elements.langDropdown.classList.remove("active");
-    });
-
-    // Handle language selection
-    elements.langDropdown.addEventListener("click", (e) => {
-      if (e.target.tagName.toLowerCase() === "button") {
-        const lang = e.target.dataset.lang;
-        const t = translations[lang] || translations.en;
-
-        elements.title.textContent = t.title;
-        elements.labelEmail.textContent = t.labelEmail;
-        elements.labelPassword.textContent = t.labelPassword;
-        elements.emailInput.placeholder = t.placeholderEmail;
-        elements.passwordInput.placeholder = t.placeholderPassword;
-        elements.loginBtn.textContent = t.loginBtn;
-
-        elements.langDropdown.classList.remove("active");
-      }
-    });
-  </script>
+// Toggle language dropdown
+settingsBtn.addEventListener("click", e => {
+  e.stopPropagation();
+  langDropdown.classList.toggle("active");
+});
+document.addEventListener("click", e => {
+  if(!settingsBtn.contains(e.target) && !langDropdown.contains(e.target))
+    langDropdown.classList.remove("active");
+});
+</script>
 </body>
 </html>
