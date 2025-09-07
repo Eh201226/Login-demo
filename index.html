@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Urbana Login / Signup</title>
+<title>Urbana Smart Solution</title>
 <style>
 :root {
   --urbana-bg: #e6eef6;
@@ -137,9 +137,7 @@ input {
 <body>
 <div class="login-box">
   <img src="https://static.cdnlogo.com/logos/u/5/urbana-smart-solutions.svg" alt="Urbana Logo" class="logo">
-  <button aria-label="Settings" class="settings-btn" id="settingsBtn">
-    ⚙
-  </button>
+  <button aria-label="Settings" class="settings-btn" id="settingsBtn">⚙</button>
   <div class="lang-dropdown" id="langDropdown"></div>
 
   <div class="tabs">
@@ -147,6 +145,7 @@ input {
     <button id="signupTab">Sign Up</button>
   </div>
 
+  <!-- Sign In -->
   <form id="signinForm">
     <div class="field">
       <label id="labelEmailSignin" for="emailSignin">Email</label>
@@ -159,16 +158,25 @@ input {
     <button type="submit" id="loginBtn" class="btn">Sign In</button>
   </form>
 
+  <!-- Sign Up -->
   <form id="signupForm" style="display:none;">
     <div class="field">
-      <label id="labelEmailSignup" for="emailSignup">Email</label>
-      <input type="email" id="emailSignup" placeholder="you@example.com" required>
+      <label id="labelFirstNameSignup" for="firstnameSignup">First Name</label>
+      <input type="text" id="firstnameSignup" placeholder="Your First Name" required>
+    </div>
+    <div class="field">
+      <label id="labelLastNameSignup" for="lastnameSignup">Last Name</label>
+      <input type="text" id="lastnameSignup" placeholder="Your Last Name" required>
+    </div>
+    <div class="field">
+      <label id="labelEmailSignup" for="emailSignup">Email Address</label>
+      <input type="email" id="emailSignup" placeholder="Your Email Address" required>
     </div>
     <div class="field">
       <label id="labelPasswordSignup" for="passwordSignup">Password</label>
       <input type="password" id="passwordSignup" placeholder="•••••••••" required>
     </div>
-    <button type="submit" class="btn">Sign Up</button>
+    <button type="submit" id="signupBtn" class="btn">Sign Up</button>
   </form>
 </div>
 
@@ -196,7 +204,6 @@ signupTab.addEventListener("click", () => {
 });
 
 // Languages
-// Languages
 const languages = [
   {code:"en",name:"English"},
   {code:"it",name:"Italiano"},
@@ -209,30 +216,87 @@ const languages = [
 
 // Translations
 const translations = {
-  en:{title:"Sign In",labelEmail:"Email",labelPassword:"Password",loginBtn:"Sign In",signupBtn:"Sign Up"},
-  it:{title:"Accedi",labelEmail:"Email",labelPassword:"Password",loginBtn:"Accedi",signupBtn:"Registrati"},
-  am:{title:"ግባ",labelEmail:"ኢሜይል",labelPassword:"የይለፍ ቃል",loginBtn:"ግባ",signupBtn:"ይመዝገቡ"},
-  es:{title:"Iniciar sesión",labelEmail:"Correo electrónico",labelPassword:"Contraseña",loginBtn:"Iniciar sesión",signupBtn:"Registrarse"},
-  fr:{title:"Se connecter",labelEmail:"Email",labelPassword:"Mot de passe",loginBtn:"Se connecter",signupBtn:"S'inscrire"},
-  pt:{title:"Entrar",labelEmail:"Email",labelPassword:"Senha",loginBtn:"Entrar",signupBtn:"Cadastrar"},
-  nl:{title:"Inloggen",labelEmail:"E-mail",labelPassword:"Wachtwoord",loginBtn:"Inloggen",signupBtn:"Registreren"}
+  en: {
+    labelEmail: "Email",
+    labelPassword: "Password",
+    loginBtn: "Sign In",
+    signupBtn: "Sign Up",
+    firstName: "First Name",
+    lastName: "Last Name",
+    emailAddress: "Email Address"
+  },
+  it: {
+    labelEmail: "Email",
+    labelPassword: "Password",
+    loginBtn: "Accedi",
+    signupBtn: "Registrati",
+    firstName: "Nome",
+    lastName: "Cognome",
+    emailAddress: "Indirizzo Email"
+  },
+  es: {
+    labelEmail: "Correo",
+    labelPassword: "Contraseña",
+    loginBtn: "Iniciar sesión",
+    signupBtn: "Registrarse",
+    firstName: "Nombre",
+    lastName: "Apellido",
+    emailAddress: "Correo electrónico"
+  },
+  fr: {
+    labelEmail: "E-mail",
+    labelPassword: "Mot de passe",
+    loginBtn: "Se connecter",
+    signupBtn: "S’inscrire",
+    firstName: "Prénom",
+    lastName: "Nom",
+    emailAddress: "Adresse e-mail"
+  },
+  pt: {
+    labelEmail: "Email",
+    labelPassword: "Senha",
+    loginBtn: "Entrar",
+    signupBtn: "Cadastrar",
+    firstName: "Nome",
+    lastName: "Sobrenome",
+    emailAddress: "Endereço de Email"
+  },
+  nl: {
+    labelEmail: "E-mail",
+    labelPassword: "Wachtwoord",
+    loginBtn: "Inloggen",
+    signupBtn: "Registreren",
+    firstName: "Voornaam",
+    lastName: "Achternaam",
+    emailAddress: "E-mailadres"
+  },
+  am: {
+    labelEmail: "ኢሜይል",
+    labelPassword: "የይለፍ ቃል",
+    loginBtn: "ግባ",
+    signupBtn: "መመዝገብ",
+    firstName: "የመጀመሪያ ስም",
+    lastName: "የአባት ስም",
+    emailAddress: "ኢሜይል አድራሻ"
+  }
 };
-
 
 // Populate language dropdown
 languages.forEach(lang=>{
   const btn = document.createElement("button");
   btn.textContent = lang.name;
   btn.addEventListener("click",()=>{
-    const t = translations[lang.code];
+    const t = translations[lang.code] || translations.en;
     // Sign In
     document.getElementById("labelEmailSignin").textContent = t.labelEmail;
     document.getElementById("labelPasswordSignin").textContent = t.labelPassword;
     document.getElementById("loginBtn").textContent = t.loginBtn;
     // Sign Up
-    document.getElementById("labelEmailSignup").textContent = t.labelEmail;
+    document.getElementById("labelFirstNameSignup").textContent = t.firstName;
+    document.getElementById("labelLastNameSignup").textContent = t.lastName;
+    document.getElementById("labelEmailSignup").textContent = t.emailAddress;
     document.getElementById("labelPasswordSignup").textContent = t.labelPassword;
-    document.querySelector("#signupForm button").textContent = t.signupBtn;
+    document.getElementById("signupBtn").textContent = t.signupBtn;
     // Close dropdown
     langDropdown.classList.remove("active");
   });
