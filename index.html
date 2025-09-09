@@ -42,7 +42,6 @@ body {
   display: flex;
   justify-content: space-around;
   margin-bottom: 20px;
-  cursor: pointer;
 }
 .tabs button {
   background: none;
@@ -51,6 +50,7 @@ body {
   padding: 8px 16px;
   border-bottom: 2px solid transparent;
   transition: border 0.2s ease;
+  cursor: pointer;
 }
 .tabs button.active {
   border-bottom: 2px solid var(--urbana-button);
@@ -59,6 +59,7 @@ body {
 .field {
   margin-bottom: 18px;
   text-align: left;
+  position: relative;
 }
 label {
   display: block;
@@ -76,6 +77,18 @@ input {
   font-size: 15px;
   color: var(--urbana-text);
   box-sizing: border-box;
+}
+.password-toggle {
+  position: absolute;
+  right: 10px;
+  top: 38px;
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+  fill: var(--urbana-label);
+}
+.password-toggle:hover {
+  fill: var(--urbana-button);
 }
 .btn {
   width: 100%;
@@ -137,44 +150,54 @@ input {
 <body>
 <div class="login-box">
   <img src="https://static.cdnlogo.com/logos/u/5/urbana-smart-solutions.svg" alt="Urbana Logo" class="logo">
-  <button aria-label="Settings" class="settings-btn" id="settingsBtn">⚙</button>
+  <button aria-label="Settings" class="settings-btn" id="settingsBtn" aria-haspopup="true" aria-expanded="false">⚙</button>
   <div class="lang-dropdown" id="langDropdown"></div>
 
-  <div class="tabs">
-    <button id="signinTab" class="active">Sign In</button>
-    <button id="signupTab">Sign Up</button>
+  <div class="tabs" role="tablist">
+    <button id="signinTab" class="active" role="tab" aria-selected="true">Sign In</button>
+    <button id="signupTab" role="tab" aria-selected="false">Sign Up</button>
   </div>
 
   <!-- Sign In -->
-  <form id="signinForm">
+  <form id="signinForm" autocomplete="on">
     <div class="field">
       <label id="labelEmailSignin" for="emailSignin">Email</label>
-      <input type="email" id="emailSignin" placeholder="you@example.com" required>
+      <input type="email" id="emailSignin" placeholder="you@example.com" autocomplete="email" required>
     </div>
     <div class="field">
       <label id="labelPasswordSignin" for="passwordSignin">Password</label>
-      <input type="password" id="passwordSignin" placeholder="•••••••••" required>
+      <input type="password" id="passwordSignin" placeholder="•••••••••" autocomplete="current-password" required>
+      <svg class="password-toggle" data-target="passwordSignin" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 
+        12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 
+        6 3 3 0 0 0 0-6z"/>
+      </svg>
     </div>
     <button type="submit" id="loginBtn" class="btn">Sign In</button>
   </form>
 
   <!-- Sign Up -->
-  <form id="signupForm" style="display:none;">
+  <form id="signupForm" style="display:none;" autocomplete="on">
     <div class="field">
       <label id="labelFirstNameSignup" for="firstnameSignup">First Name</label>
-      <input type="text" id="firstnameSignup" placeholder="Your First Name" required>
+      <input type="text" id="firstnameSignup" placeholder="Your First Name" autocomplete="given-name" required>
     </div>
     <div class="field">
       <label id="labelLastNameSignup" for="lastnameSignup">Last Name</label>
-      <input type="text" id="lastnameSignup" placeholder="Your Last Name" required>
+      <input type="text" id="lastnameSignup" placeholder="Your Last Name" autocomplete="family-name" required>
     </div>
     <div class="field">
       <label id="labelEmailSignup" for="emailSignup">Email Address</label>
-      <input type="email" id="emailSignup" placeholder="Your Email Address" required>
+      <input type="email" id="emailSignup" placeholder="Your Email Address" autocomplete="email" required>
     </div>
     <div class="field">
       <label id="labelPasswordSignup" for="passwordSignup">Password</label>
-      <input type="password" id="passwordSignup" placeholder="•••••••••" required>
+      <input type="password" id="passwordSignup" placeholder="•••••••••" autocomplete="new-password" required>
+      <svg class="password-toggle" data-target="passwordSignup" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 
+        12.5a5 5 0 1 1 0-10 5 5 0 0 1 0 10zm0-8a3 3 0 1 0 0 
+        6 3 3 0 0 0 0-6z"/>
+      </svg>
     </div>
     <button type="submit" id="signupBtn" class="btn">Sign Up</button>
   </form>
@@ -195,12 +218,16 @@ signinTab.addEventListener("click", () => {
   signupForm.style.display = "none";
   signinTab.classList.add("active");
   signupTab.classList.remove("active");
+  signinTab.setAttribute("aria-selected", "true");
+  signupTab.setAttribute("aria-selected", "false");
 });
 signupTab.addEventListener("click", () => {
   signupForm.style.display = "block";
   signinForm.style.display = "none";
   signupTab.classList.add("active");
   signinTab.classList.remove("active");
+  signupTab.setAttribute("aria-selected", "true");
+  signinTab.setAttribute("aria-selected", "false");
 });
 
 // Languages
@@ -214,103 +241,79 @@ const languages = [
   {code:"nl",name:"Nederlands"}
 ];
 
-// Translations
 const translations = {
-  en: {
-    labelEmail: "Email",
-    labelPassword: "Password",
-    loginBtn: "Sign In",
-    signupBtn: "Sign Up",
-    firstName: "First Name",
-    lastName: "Last Name",
-    emailAddress: "Email Address"
-  },
-  it: {
-    labelEmail: "Email",
-    labelPassword: "Password",
-    loginBtn: "Accedi",
-    signupBtn: "Registrati",
-    firstName: "Nome",
-    lastName: "Cognome",
-    emailAddress: "Indirizzo Email"
-  },
-  es: {
-    labelEmail: "Correo",
-    labelPassword: "Contraseña",
-    loginBtn: "Iniciar sesión",
-    signupBtn: "Registrarse",
-    firstName: "Nombre",
-    lastName: "Apellido",
-    emailAddress: "Correo electrónico"
-  },
-  fr: {
-    labelEmail: "E-mail",
-    labelPassword: "Mot de passe",
-    loginBtn: "Se connecter",
-    signupBtn: "S’inscrire",
-    firstName: "Prénom",
-    lastName: "Nom",
-    emailAddress: "Adresse e-mail"
-  },
-  pt: {
-    labelEmail: "Email",
-    labelPassword: "Senha",
-    loginBtn: "Entrar",
-    signupBtn: "Cadastrar",
-    firstName: "Nome",
-    lastName: "Sobrenome",
-    emailAddress: "Endereço de Email"
-  },
-  nl: {
-    labelEmail: "E-mail",
-    labelPassword: "Wachtwoord",
-    loginBtn: "Inloggen",
-    signupBtn: "Registreren",
-    firstName: "Voornaam",
-    lastName: "Achternaam",
-    emailAddress: "E-mailadres"
-  },
-  am: {
-    labelEmail: "ኢሜይል",
-    labelPassword: "የይለፍ ቃል",
-    loginBtn: "ግባ",
-    signupBtn: "መመዝገብ",
-    firstName: "የመጀመሪያ ስም",
-    lastName: "የአባት ስም",
-    emailAddress: "ኢሜይል አድራሻ"
-  }
+  en: {labelEmail:"Email",labelPassword:"Password",loginBtn:"Sign In",signupBtn:"Sign Up",firstName:"First Name",lastName:"Last Name",emailAddress:"Email Address"},
+  it: {labelEmail:"Email",labelPassword:"Password",loginBtn:"Accedi",signupBtn:"Registrati",firstName:"Nome",lastName:"Cognome",emailAddress:"Indirizzo Email"},
+  es: {labelEmail:"Correo",labelPassword:"Contraseña",loginBtn:"Iniciar sesión",signupBtn:"Registrarse",firstName:"Nombre",lastName:"Apellido",emailAddress:"Correo electrónico"},
+  fr: {labelEmail:"E-mail",labelPassword:"Mot de passe",loginBtn:"Se connecter",signupBtn:"S’inscrire",firstName:"Prénom",lastName:"Nom",emailAddress:"Adresse e-mail"},
+  pt: {labelEmail:"Email",labelPassword:"Senha",loginBtn:"Entrar",signupBtn:"Cadastrar",firstName:"Nome",lastName:"Sobrenome",emailAddress:"Endereço de Email"},
+  nl: {labelEmail:"E-mail",labelPassword:"Wachtwoord",loginBtn:"Inloggen",signupBtn:"Registreren",firstName:"Voornaam",lastName:"Achternaam",emailAddress:"E-mailadres"},
+  am: {labelEmail:"ኢሜይል",labelPassword:"የይለፍ ቃል",loginBtn:"ግባ",signupBtn:"መመዝገብ",firstName:"የመጀመሪያ ስም",lastName:"የአባት ስም",emailAddress:"ኢሜይል አድራሻ"}
 };
+
+// Apply translations
+function applyTranslations(code) {
+  const t = translations[code] || translations.en;
+  document.getElementById("labelEmailSignin").textContent = t.labelEmail;
+  document.getElementById("labelPasswordSignin").textContent = t.labelPassword;
+  document.getElementById("loginBtn").textContent = t.loginBtn;
+  document.getElementById("labelFirstNameSignup").textContent = t.firstName;
+  document.getElementById("labelLastNameSignup").textContent = t.lastName;
+  document.getElementById("labelEmailSignup").textContent = t.emailAddress;
+  document.getElementById("labelPasswordSignup").textContent = t.labelPassword;
+  document.getElementById("signupBtn").textContent = t.signupBtn;
+  localStorage.setItem("urbanaLang", code);
+}
 
 // Populate language dropdown
 languages.forEach(lang=>{
   const btn = document.createElement("button");
+  btn.type = "button";
   btn.textContent = lang.name;
   btn.addEventListener("click",()=>{
-    const t = translations[lang.code] || translations.en;
-    // Sign In
-    document.getElementById("labelEmailSignin").textContent = t.labelEmail;
-    document.getElementById("labelPasswordSignin").textContent = t.labelPassword;
-    document.getElementById("loginBtn").textContent = t.loginBtn;
-    // Sign Up
-    document.getElementById("labelFirstNameSignup").textContent = t.firstName;
-    document.getElementById("labelLastNameSignup").textContent = t.lastName;
-    document.getElementById("labelEmailSignup").textContent = t.emailAddress;
-    document.getElementById("labelPasswordSignup").textContent = t.labelPassword;
-    document.getElementById("signupBtn").textContent = t.signupBtn;
-    // Close dropdown
+    applyTranslations(lang.code);
     langDropdown.classList.remove("active");
+    settingsBtn.setAttribute("aria-expanded","false");
   });
   langDropdown.appendChild(btn);
 });
 
+// Restore saved language
+const savedLang = localStorage.getItem("urbanaLang");
+if(savedLang && translations[savedLang]) applyTranslations(savedLang);
+
 // Toggle language dropdown
 settingsBtn.addEventListener("click", e => {
   e.stopPropagation();
-  langDropdown.classList.toggle("active");
+  const expanded = langDropdown.classList.toggle("active");
+  settingsBtn.setAttribute("aria-expanded", expanded ? "true" : "false");
 });
 document.addEventListener("click", e => {
-  if(!settingsBtn.contains(e.target) && !langDropdown.contains(e.target))
+  if(!settingsBtn.contains(e.target) && !langDropdown.contains(e.target)) {
     langDropdown.classList.remove("active");
+    settingsBtn.setAttribute("aria-expanded","false");
+  }
+});
+
+// Password toggle
+document.querySelectorAll(".password-toggle").forEach(toggle=>{
+  toggle.addEventListener("click",()=>{
+    const input = document.getElementById(toggle.dataset.target);
+    if(input.type === "password"){
+      input.type = "text";
+      toggle.innerHTML = `<path d="M12 5c-7 0-11 7-11 7s4 7 11 7 11-7 11-7-4-7-11-7zm0 
+      12c-2.76 0-5-2.24-5-5s2.24-5 
+      5-5 5 2.24 5 5-2.24 5-5 5z"/><line x1="2" y1="2" x2="22" y2="22" stroke="currentColor" stroke-width="2"/>`;
+    } else {
+      input.type = "password";
+      toggle.innerHTML = `<path d="M12 4.5C7 4.5 2.73 7.61 1 
+      12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 
+      11-7.5c-1.73-4.39-6-7.5-11-7.5zm0 
+      12.5a5 5 0 1 1 0-10 5 5 0 0 1 
+      0 10zm0-8a3 3 0 1 0 0 
+      6 3 3 0 0 0 0-6z"/>`;
+    }
+  });
 });
 </script>
 </body>
